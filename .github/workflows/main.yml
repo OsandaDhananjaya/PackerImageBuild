@@ -1,26 +1,32 @@
-name: Build Azure Image
+name: Packer Build
 
 on:
   push:
     branches:
-      - main
+      - main  # Set this to the branch that should trigger the build
 
 jobs:
   build:
     runs-on: self-hosted
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
-      - name: Set up Packer
-        uses: hashicorp/setup-packer@v1
-        with:
-          packer-version: 'v1.10.0'
+    - name: Set Up Packer
+      uses: hashicorp/setup-packer@v1.0.1
+      with:
+        packer-version: '1.6.0' # Specify the Packer version
 
-      - name: Build Azure Image
-        run: packer build -var "client_id=${{ secrets.AZURE_CLIENT_ID }}" -var "client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" -var "tenant_id=${{ secrets.AZURE_TENANT_ID }}" -var "subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" azure-packer-template.json
-        env:
-          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - name: Build Azure Image with Packer
+      run: |
+        packer build -var 'client_id=${{ secrets.AZURE_CLIENT_ID }}' \
+                     -var 'client_secret=${{ secrets.AZURE_CLIENT_SECRET }}' \
+                     -var 'tenant_id=${{ secrets.AZURE_TENANT_ID }}' \
+                     -var 'subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}' \
+                     template.json
+      env:
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
