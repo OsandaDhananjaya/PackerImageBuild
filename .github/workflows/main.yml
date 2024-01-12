@@ -20,11 +20,7 @@ jobs:
 
     - name: Build Azure Image with Packer
       run: |
-        packer build -var 'client_id=${{ secrets.AZURE_CLIENT_ID }}' \
-                     -var 'client_secret=${{ secrets.AZURE_CLIENT_SECRET }}' \
-                     -var 'tenant_id=${{ secrets.AZURE_TENANT_ID }}' \
-                     -var 'subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}' \
-                     azure-packer-template.json
+        packer build azure-packer-template.json
 
       env:
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
