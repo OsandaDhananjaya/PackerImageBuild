@@ -16,7 +16,7 @@ jobs:
       - name: Set up Packer
         uses: hashicorp/setup-packer@v1
         with:
-          packer-version: '1.7.4'
+          packer-version: 'v1.10.0'
 
       - name: Build Azure Image
         run: packer build -var "client_id=${{ secrets.AZURE_CLIENT_ID }}" -var "client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" -var "tenant_id=${{ secrets.AZURE_TENANT_ID }}" -var "subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" azure-packer-template.json
