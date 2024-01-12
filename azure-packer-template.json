@@ -2,10 +2,10 @@
   "builders": [{
     "type": "azure-arm",
 
-     "client_id": "{{user `client_id`}}",
-     "client_secret": "{{user `client_secret`}}",
-     "tenant_id": "{{user `tenant_id`}}",
-     "subscription_id": "{{user `subscription_id`}}",
+     "client_id": ${{ secrets.AZURE_CLIENT_ID }},
+     "client_secret": ${{ secrets.AZURE_CLIENT_SECRET }},
+     "tenant_id": ${{ secrets.AZURE_TENANT_ID }},
+     "subscription_id": ${{ secrets.AZURE_SUBSCRIPTION_ID }},
     "managed_image_resource_group_name": "cicd-project",
     "managed_image_name": "myPackerImage",
 
