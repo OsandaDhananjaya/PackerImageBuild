@@ -14,7 +14,7 @@ jobs:
         fetch-depth: 0
 
     - name: Set Up Packer
-      uses: hashicorp/setup-packer
+      uses: hashicorp/setup-packer@v2.0.1
       with:
         packer-version: 'v1.10.0' # Specify the Packer version
 
