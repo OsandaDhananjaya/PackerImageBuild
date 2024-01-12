@@ -8,7 +8,7 @@
     "subscription_id": "{{user `subscription_id`}}",
 
     "managed_image_resource_group_name": "cicd-project",
-    "managed_image_name": "myPackerImage",
+    "managed_image_name": "PackerImage",
 
     "os_type": "Linux",
     "image_publisher": "Canonical",
