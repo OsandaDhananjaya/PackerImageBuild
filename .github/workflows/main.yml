@@ -17,10 +17,12 @@ jobs:
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
         CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         TENANT_ID: ${{ secrets.TENANT_ID }}
-        SUBSCRIPTION_ID: "d7d5a26b-8670-40f9-aac3-ef81841b82e7"
+        SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
       run: |
         packer build \
           -var 'client_id=${{ env.CLIENT_ID }}' \
           -var 'client_secret=${{ env.CLIENT_SECRET }}' \
           -var 'tenant_id=${{ env.TENANT_ID }}' \
+          -var 'subscription_id=${{ env.SUBSCRIPTION_ID }}' \
+          
           azure-packer-template.json
