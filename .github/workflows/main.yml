@@ -24,5 +24,4 @@ jobs:
           -var 'client_secret=${{ env.CLIENT_SECRET }}' \
           -var 'tenant_id=${{ env.TENANT_ID }}' \
           -var 'subscription_id=${{ env.SUBSCRIPTION_ID }}' \
-          
-          azure-packer-template.json
+           azure-packer-template.json
