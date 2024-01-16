@@ -21,4 +21,4 @@ jobs:
     
     - name: Build Image
       run: |
-        packer build /Downloads/Packer-in-Azure-main/ubuntu.json
+        packer build /home/osanda/Downloads/Packer-in-Azure-main/ubuntu.json
