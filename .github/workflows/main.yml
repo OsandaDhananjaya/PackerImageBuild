@@ -1,27 +1,24 @@
-
 name: Build Azure Image with Packer
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build-image:
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      with:
+        path: /Downloads/Packer-in-Azure-main/ubuntu.json
+
     - name: Set up Packer
       uses: hashicorp/setup-packer@v2.0.1
       with:
         packer-version: 'v1.10.0'
     
     - name: Build Image
-      env:
-        CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-        TENANT_ID: ${{ secrets.TENANT_ID }}
-        SUBSCRIPTION_ID: "d7d5a26b-8670-40f9-aac3-ef81841b82e7"
       run: |
-        packer build \
-          -var 'client_id=${{ env.CLIENT_ID }}' \
-          -var 'client_secret=${{ env.CLIENT_SECRET }}' \
-          -var 'tenant_id=${{ env.TENANT_ID }}' \
-          azure-packer-template.json
+        packer build /Downloads/Packer-in-Azure-main/ubuntu.json
