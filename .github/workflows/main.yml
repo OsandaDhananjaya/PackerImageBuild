@@ -12,7 +12,7 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
       with:
-        path: /Downloads/Packer-in-Azure-main/ubuntu.json
+        path: /home/osanda/actions-runner/_work/PackerImageBuild/PackerImageBuild
 
     - name: Set up Packer
       uses: hashicorp/setup-packer@v2.0.1
