@@ -34,7 +34,7 @@ jobs:
         # Gather information about the built image to use in VMSS
         $imageId = $(az image show \
           --resource-group "cicd-project" \
-          --name "myNewtest2PackerImage" \
+          --name "myNewtest3PackerImage" \
           --query 'id' -o tsv)
 
         # Update the VMSS with the new image
