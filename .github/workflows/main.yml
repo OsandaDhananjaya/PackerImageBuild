@@ -24,25 +24,21 @@ jobs:
         packer build /home/osanda/Downloads/Packer-in-Azure-main/ubuntu.json
 
     - name: Update scale set image
-      # Adding 'env' to provide access to secrets, you must store your Azure credentials in GitHub secrets.
-      env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       run: |
+        # Read secrets from file
+        source /home/osanda/Downloads/Packer-in-Azure-main/secrets.txt
+
         # Login to Azure CLI using service principal credentials
         az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
 
         # Gather information about the built image to use in VMSS
         $imageId = $(az image show \
           --resource-group "cicd-project" \
-          --name "NewTestImage" \
+          --name "myNewtest2PackerImage" \
           --query 'id' -o tsv)
 
         # Update the VMSS with the new image
         az vmss update \
-          --resource-group "YourScaleSetResourceGroup" \
-          --name "YourScaleSetName" \
+          --resource-group " TEST4_GROUP" \
+          --name "test4" \
           --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
-
