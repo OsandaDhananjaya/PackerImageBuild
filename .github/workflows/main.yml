@@ -21,6 +21,7 @@ jobs:
     
     - name: Build Image
       run: |
+        ls /home/osanda/Downloads/Packer-in-Azure-main/mi_scaleset.bash
         packer build /home/osanda/Downloads/Packer-in-Azure-main/ubuntutest.json
 
     - name: Update scale set image
