@@ -21,7 +21,6 @@ jobs:
     
     - name: Build Image
       run: |
-        ls /home/osanda/Downloads/Packer-in-Azure-main/mi_scaleset.bash
         packer build /home/osanda/Downloads/Packer-in-Azure-main/ubuntutest.json
 
     - name: Update scale set image
@@ -41,7 +40,7 @@ jobs:
         # Gather information about the built image to use in VMSS
         imageId=$(az image show \
           --resource-group "TEST4_GROUP" \
-          --name "wso2test1" \
+          --name "wso2test2" \
           --query 'id' -o tsv)
     
         # Update the VMSS with the new image
