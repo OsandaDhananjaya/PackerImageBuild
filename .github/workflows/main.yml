@@ -21,7 +21,7 @@ jobs:
     
     - name: Build Image
       run: |
-        packer build /home/osanda/Downloads/Packer-in-Azure-main/ubuntu.json
+        packer build /home/osanda/Downloads/Packer-in-Azure-main/ubuntutest.json
 
     - name: Update scale set image
       run: |
@@ -39,8 +39,8 @@ jobs:
     
         # Gather information about the built image to use in VMSS
         imageId=$(az image show \
-          --resource-group "cicd-project" \
-          --name "myNewtest6PackerImage" \
+          --resource-group "TEST4_GROUP" \
+          --name "wso2test1" \
           --query 'id' -o tsv)
     
         # Update the VMSS with the new image
