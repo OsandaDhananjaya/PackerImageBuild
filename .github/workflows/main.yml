@@ -40,7 +40,7 @@ jobs:
         # Gather information about the built image to use in VMSS
         imageId=$(az image show \
           --resource-group "TEST4_GROUP" \
-          --name "wso2test2" \
+          --name "wso2test3" \
           --query 'id' -o tsv)
     
         # Update the VMSS with the new image
