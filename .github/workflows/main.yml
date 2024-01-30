@@ -20,38 +20,21 @@ jobs:
         packer-version: 'v1.10.0'
 
 
-    - name: Set up Azure credentials
-      run: |
-        echo "AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
-        echo "AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}" >> $GITHUB_ENV
-        echo "AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
-        echo "AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+    # - name: Set up Azure credentials
+    #   run: |
+    #     echo "AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
+    #     echo "AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}" >> $GITHUB_ENV
+    #     echo "AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
+    #     echo "AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
     
-    - name: Build Image
-      run: |
-        packer build /home/osanda/Downloads/Packer-in-Azure-main/Main_packer.json
+    # - name: Build Image
+    #   run: |
+    #     packer build /home/osanda/Downloads/Packer-in-Azure-main/Main_packer.json
 
     - name: Update scale set image
       run: |
-        # # Read secrets from file
-        # source /home/osanda/Downloads/Packer-in-Azure-main/secrets.txt
-    
-        # # Print values for debugging
-        # echo "ARM_CLIENT_ID: $ARM_CLIENT_ID"
-        # echo "ARM_CLIENT_SECRET: $ARM_CLIENT_SECRET"
-        # echo "ARM_SUBSCRIPTION_ID: $ARM_SUBSCRIPTION_ID"
-        # echo "ARM_TENANT_ID: $ARM_TENANT_ID"
-    
-        # # Login to Azure CLI using service principal credentials
-        # az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
-
-
-
-        # Set up Azure credentials for Azure CLI
-        echo "ARM_CLIENT_ID=${{ secrets.ARM_CLIENT_ID }}" >> $GITHUB_ENV
-        echo "ARM_CLIENT_SECRET=${{ secrets.ARM_CLIENT_SECRET }}" >> $GITHUB_ENV
-        echo "ARM_TENANT_ID=${{ secrets.ARM_TENANT_ID }}" >> $GITHUB_ENV
-        echo "ARM_SUBSCRIPTION_ID=${{ secrets.ARM_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+        # Read secrets from file
+        source /home/osanda/Downloads/Packer-in-Azure-main/secrets.txt
     
         # Print values for debugging
         echo "ARM_CLIENT_ID: $ARM_CLIENT_ID"
@@ -61,6 +44,23 @@ jobs:
     
         # Login to Azure CLI using service principal credentials
         az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+
+
+
+        # # Set up Azure credentials for Azure CLI
+        # echo "ARM_CLIENT_ID=${{ secrets.ARM_CLIENT_ID }}" >> $GITHUB_ENV
+        # echo "ARM_CLIENT_SECRET=${{ secrets.ARM_CLIENT_SECRET }}" >> $GITHUB_ENV
+        # echo "ARM_TENANT_ID=${{ secrets.ARM_TENANT_ID }}" >> $GITHUB_ENV
+        # echo "ARM_SUBSCRIPTION_ID=${{ secrets.ARM_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+    
+        # # Print values for debugging
+        # echo "ARM_CLIENT_ID: $ARM_CLIENT_ID"
+        # echo "ARM_CLIENT_SECRET: $ARM_CLIENT_SECRET"
+        # echo "ARM_SUBSCRIPTION_ID: $ARM_SUBSCRIPTION_ID"
+        # echo "ARM_TENANT_ID: $ARM_TENANT_ID"
+    
+        # # Login to Azure CLI using service principal credentials
+        # az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
     
     
         # Gather information about the built image to use in VMSS
