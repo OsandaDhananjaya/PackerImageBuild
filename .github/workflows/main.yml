@@ -21,7 +21,7 @@ jobs:
     
     - name: Build Image
       run: |
-        packer build /home/osanda/Downloads/Packer-in-Azure-main/ubuntutest.json
+        packer build /home/osanda/Downloads/Packer-in-Azure-main/Main_packer.json
 
     - name: Update scale set image
       run: |
@@ -40,12 +40,12 @@ jobs:
         # Gather information about the built image to use in VMSS
         imageId=$(az image show \
           --resource-group "TEST4_GROUP" \
-          --name "test5" \
+          --name "testimage888" \
           --query 'id' -o tsv)
     
         # Update the VMSS with the new image
         az vmss update \
           --resource-group "TEST4_GROUP" \
-          --name "test4" \
+          --name "imagetest999" \
           --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
 
