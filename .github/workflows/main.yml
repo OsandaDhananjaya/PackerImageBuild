@@ -61,13 +61,13 @@ jobs:
         # Update the VMSS with the new image
         az vmss update \
           --resource-group "TEST4_GROUP" \
-          --name "imagetest999" \
+          --name "scaleset1" \
           --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
     
         # Upgrade all instances to the latest model
         az vmss update-instances \
           --resource-group "TEST4_GROUP" \
-          --name "imagetest999" \
+          --name "scaleset1" \
           --instance-ids "*"
 
 
