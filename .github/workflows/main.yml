@@ -31,9 +31,9 @@ jobs:
     #   run: |
     #     packer build /home/osanda/Downloads/Packer-in-Azure-main/Main_packer.json
 
-    - name: Update scale set image
+    - name: Update scale set image and instances
       run: |
-        # Read secrets from file 
+        # Read secrets from file
         source /home/osanda/Downloads/Packer-in-Azure-main/secrets.txt
     
         # Login to Azure CLI using service principal credentials
@@ -63,6 +63,11 @@ jobs:
           --resource-group "TEST4_GROUP" \
           --name "imagetest999" \
           --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
-
+    
+        # Upgrade all instances to the latest model
+        az vmss update-instances \
+          --resource-group "TEST4_GROUP" \
+          --name "imagetest999" \
+          --instance-ids "*"
 
 
