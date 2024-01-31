@@ -33,35 +33,18 @@ jobs:
 
     - name: Update scale set image
       run: |
-        # Read secrets from file
+        # Read secrets from file (make sure the path is correct)
         source /home/osanda/Downloads/Packer-in-Azure-main/secrets.txt
-    
-        # Print values for debugging
-        echo "ARM_CLIENT_ID: $ARM_CLIENT_ID"
-        echo "ARM_CLIENT_SECRET: $ARM_CLIENT_SECRET"
-        echo "ARM_SUBSCRIPTION_ID: $ARM_SUBSCRIPTION_ID"
-        echo "ARM_TENANT_ID: $ARM_TENANT_ID"
     
         # Login to Azure CLI using service principal credentials
         az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
-
-
-
-        # # Set up Azure credentials for Azure CLI
-        # echo "ARM_CLIENT_ID=${{ secrets.ARM_CLIENT_ID }}" >> $GITHUB_ENV
-        # echo "ARM_CLIENT_SECRET=${{ secrets.ARM_CLIENT_SECRET }}" >> $GITHUB_ENV
-        # echo "ARM_TENANT_ID=${{ secrets.ARM_TENANT_ID }}" >> $GITHUB_ENV
-        # echo "ARM_SUBSCRIPTION_ID=${{ secrets.ARM_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+        if [ "$?" -ne 0 ]; then
+          echo "Azure login failed!"
+          exit 1
+        fi
     
-        # # Print values for debugging
-        # echo "ARM_CLIENT_ID: $ARM_CLIENT_ID"
-        # echo "ARM_CLIENT_SECRET: $ARM_CLIENT_SECRET"
-        # echo "ARM_SUBSCRIPTION_ID: $ARM_SUBSCRIPTION_ID"
-        # echo "ARM_TENANT_ID: $ARM_TENANT_ID"
-    
-        # # Login to Azure CLI using service principal credentials
-        # az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
-    
+        # Set the Azure subscription context
+        az account set --subscription $ARM_SUBSCRIPTION_ID
     
         # Gather information about the built image to use in VMSS
         imageId=$(az image show \
@@ -69,9 +52,82 @@ jobs:
           --name "testimage777" \
           --query 'id' -o tsv)
     
+        # Check if the image ID was retrieved successfully
+        if [ -z "$imageId" ]; then
+          echo "Failed to retrieve the image ID"
+          exit 1
+        fi
+    
         # Update the VMSS with the new image
         az vmss update \
           --resource-group "TEST4_GROUP" \
           --name "imagetest999" \
           --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    # - name: Update scale set image
+    #   run: |
+    #     # Read secrets from file
+    #     source /home/osanda/Downloads/Packer-in-Azure-main/secrets.txt
+    
+    #     # Print values for debugging
+    #     echo "ARM_CLIENT_ID: $ARM_CLIENT_ID"
+    #     echo "ARM_CLIENT_SECRET: $ARM_CLIENT_SECRET"
+    #     echo "ARM_SUBSCRIPTION_ID: $ARM_SUBSCRIPTION_ID"
+    #     echo "ARM_TENANT_ID: $ARM_TENANT_ID"
+    
+    #     # Login to Azure CLI using service principal credentials
+    #     az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+
+
+
+    #     # # Set up Azure credentials for Azure CLI
+    #     # echo "ARM_CLIENT_ID=${{ secrets.ARM_CLIENT_ID }}" >> $GITHUB_ENV
+    #     # echo "ARM_CLIENT_SECRET=${{ secrets.ARM_CLIENT_SECRET }}" >> $GITHUB_ENV
+    #     # echo "ARM_TENANT_ID=${{ secrets.ARM_TENANT_ID }}" >> $GITHUB_ENV
+    #     # echo "ARM_SUBSCRIPTION_ID=${{ secrets.ARM_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+    
+    #     # # Print values for debugging
+    #     # echo "ARM_CLIENT_ID: $ARM_CLIENT_ID"
+    #     # echo "ARM_CLIENT_SECRET: $ARM_CLIENT_SECRET"
+    #     # echo "ARM_SUBSCRIPTION_ID: $ARM_SUBSCRIPTION_ID"
+    #     # echo "ARM_TENANT_ID: $ARM_TENANT_ID"
+    
+    #     # # Login to Azure CLI using service principal credentials
+    #     # az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+    
+    
+    #     # Gather information about the built image to use in VMSS
+    #     imageId=$(az image show \
+    #       --resource-group "TEST4_GROUP" \
+    #       --name "testimage777" \
+    #       --query 'id' -o tsv)
+    
+    #     # Update the VMSS with the new image
+    #     az vmss update \
+    #       --resource-group "TEST4_GROUP" \
+    #       --name "imagetest999" \
+    #       --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
 
