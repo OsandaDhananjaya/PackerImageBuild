@@ -33,7 +33,7 @@ jobs:
 
     - name: Update scale set image
       run: |
-        # Read secrets from file (make sure the path is correct)
+        # Read secrets from file 
         source /home/osanda/Downloads/Packer-in-Azure-main/secrets.txt
     
         # Login to Azure CLI using service principal credentials
@@ -49,7 +49,7 @@ jobs:
         # Gather information about the built image to use in VMSS
         imageId=$(az image show \
           --resource-group "TEST4_GROUP" \
-          --name "imaget1" \
+          --name "scalesetimage1" \
           --query 'id' -o tsv)
     
         # Check if the image ID was retrieved successfully
@@ -61,7 +61,7 @@ jobs:
         # Update the VMSS with the new image
         az vmss update \
           --resource-group "TEST4_GROUP" \
-          --name "imagetest999" \
+          --name "scaleset1" \
           --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
 
 
