@@ -49,7 +49,7 @@ jobs:
         # Gather information about the built image to use in VMSS
         imageId=$(az image show \
           --resource-group "TEST4_GROUP" \
-          --name "scalesetimage1" \
+          --name "testimage2" \
           --query 'id' -o tsv)
     
         # Check if the image ID was retrieved successfully
