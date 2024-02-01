@@ -20,16 +20,16 @@ jobs:
         packer-version: 'v1.10.0'
 
 
-    - name: Set up Azure credentials
-      run: |
-        echo "AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
-        echo "AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}" >> $GITHUB_ENV
-        echo "AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
-        echo "AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
+    # - name: Set up Azure credentials
+    #   run: |
+    #     echo "AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
+    #     echo "AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}" >> $GITHUB_ENV
+    #     echo "AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
+    #     echo "AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
     
-    - name: Build Image
-      run: |
-        packer build /home/osanda/Downloads/Packer-in-Azure-main/Main_packer.json
+    # - name: Build Image
+    #   run: |
+    #     packer build /home/osanda/Downloads/Packer-in-Azure-main/Main_packer.json
 
     - name: Update scale set image and instances
       run: |
@@ -49,7 +49,7 @@ jobs:
         # Gather information about the built image to use in VMSS
         imageId=$(az image show \
           --resource-group "TEST4_GROUP" \
-          --name "testimage2" \
+          --name "scalesetimage5" \
           --query 'id' -o tsv)
     
         # Check if the image ID was retrieved successfully
@@ -64,10 +64,6 @@ jobs:
           --name "imagetest999" \
           --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
     
-        # Upgrade all instances to the latest model
-        az vmss update-instances \
-          --resource-group "TEST4_GROUP" \
-          --name "imagetest999" \
-          --instance-ids "*"
+
 
 
