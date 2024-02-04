@@ -49,7 +49,7 @@ jobs:
         # Gather information about the built image to use in VMSS
         imageId=$(az image show \
           --resource-group "TEST4_GROUP" \
-          --name "testimage2" \
+          --name "scaleset1" \
           --query 'id' -o tsv)
     
         # Check if the image ID was retrieved successfully
@@ -61,7 +61,7 @@ jobs:
         # Update the VMSS with the new image
         az vmss update \
           --resource-group "TEST4_GROUP" \
-          --name "imagetest999" \
+          --name "testimage2" \
           --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
     
 
