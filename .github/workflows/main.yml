@@ -26,9 +26,9 @@ jobs:
         packer-version: 'v1.10.0'
 
 
-    - name: Install Azure plugin
-      run: |
-        packer init /home/azureuser/Packer-in-Azure-main/Main_packer.json
+    # - name: Install Azure plugin
+    #   run: |
+    #     packer init /home/azureuser/Packer-in-Azure-main/Main_packer.json
     
 
 
