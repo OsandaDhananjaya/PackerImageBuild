@@ -35,7 +35,7 @@ jobs:
     
     - name: Build Image
       run: |
-        packer build /home/osanda/Downloads/Packer-in-Azure-main/Main_packer.json
+        packer build /Packer-in-Azure-main/Main_packer.json
 
     - name: Update scale set image and instances
       run: |
