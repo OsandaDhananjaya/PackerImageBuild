@@ -35,7 +35,7 @@ jobs:
     
     - name: Build Image
       run: |
-        packer build /home/azureuser/Packer-in-Azure-main/Main_packer.pkr.json 
+        packer build /home/azureuser/Packer-in-Azure-main/Main_packer.json 
 
     - name: Update scale set image and instances
       run: |
