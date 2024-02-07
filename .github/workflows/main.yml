@@ -19,6 +19,10 @@ jobs:
     # - name: Install unzip
     #   run: sudo apt-get install unzip
 
+    - name: Install azure-arm plugin
+      run: packer plugins install github.com/hashicorp/azure
+
+
 
     - name: Set up Packer
       uses: hashicorp/setup-packer@v2.0.1
