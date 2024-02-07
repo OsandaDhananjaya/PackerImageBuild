@@ -26,6 +26,12 @@ jobs:
         packer-version: 'v1.10.0'
 
 
+    - name: Install Azure plugin
+      run: |
+        packer init /home/azureuser/Packer-in-Azure-main/Main_packer.json
+    
+
+
     - name: Set up Azure credentials
       run: |
         echo "AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
