@@ -12,7 +12,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
-          path: /home/osanda/actions-runner/_work/PackerImageBuild/PackerImageBuild
+          path:  /home/azureuser/actions-runner/_work/PackerImageBuild/PackerImageBuild
 
       - name: Install Azure CLI
         run: |
