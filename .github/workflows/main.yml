@@ -9,77 +9,68 @@ jobs:
   build-image:
     runs-on: self-hosted
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-      with:
-        path: /home/azureuser/actions-runner/_work/PackerImageBuild/PackerImageBuild
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          path: /home/osanda/actions-runner/_work/PackerImageBuild/PackerImageBuild
 
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
+      - name: Install Packer
+        run: |
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+          sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+          sudo apt-get update && sudo apt-get install packer
 
-    # - name: Install unzip
-    #   run: sudo apt-get install unzip
+      - name: Set up Azure credentials
+        run: |
+          echo "AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
+          echo "AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
 
-    - name: Install azure-arm plugin
-      run: packer plugins install github.com/hashicorp/azure
+      - name: Build Image
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          packer build /home/osanda/actions-runner/_work/PackerImageBuild/PackerImageBuild/Main_packer.json
 
+      - name: Update scale set image and instances
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        run: |
+          # Login to Azure CLI using service principal credentials
+          az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+          if [ "$?" -ne 0 ]; then
+            echo "Azure login failed!"
+            exit 1
+          fi
 
+          # Set the Azure subscription context
+          az account set --subscription $ARM_SUBSCRIPTION_ID
 
-    - name: Set up Packer
-      uses: hashicorp/setup-packer@v2.0.1
-      with:
-        packer-version: 'v1.10.0'
+          # Gather information about the built image to use in VMSS
+          imageId=$(az image show \
+            --resource-group "testimage" \
+            --name "testimage3" \
+            --query 'id' -o tsv)
 
+          # Check if the image ID was retrieved successfully
+          if [ -z "$imageId" ]; then
+            echo "Failed to retrieve the image ID"
+            exit 1
+          fi
 
-    # - name: Install Azure plugin
-    #   run: |
-    #     packer init /home/azureuser/Packer-in-Azure-main/Main_packer.json
-    
-
-
-    - name: Set up Azure credentials
-      run: |
-        echo "AZURE_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
-        echo "AZURE_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}" >> $GITHUB_ENV
-        echo "AZURE_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
-        echo "AZURE_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
-    
-    - name: Build Image
-      run: |
-        packer build /home/azureuser/Packer-in-Azure-main/Main_packer.json 
-
-    - name: Update scale set image and instances
-      run: |
-        # Read secrets from file
-        source /home/osanda/Downloads/Packer-in-Azure-main/secrets.txt
-    
-        # Login to Azure CLI using service principal credentials
-        az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
-        if [ "$?" -ne 0 ]; then
-          echo "Azure login failed!"
-          exit 1
-        fi
-    
-        # Set the Azure subscription context
-        az account set --subscription $ARM_SUBSCRIPTION_ID
-    
-        # Gather information about the built image to use in VMSS
-        imageId=$(az image show \
-          --resource-group "testimage" \
-          --name "testimage3" \
-          --query 'id' -o tsv)
-    
-        # Check if the image ID was retrieved successfully
-        if [ -z "$imageId" ]; then
-          echo "Failed to retrieve the image ID"
-          exit 1
-        fi
-    
-        # Update the VMSS with the new image
-        az vmss update \
-          --resource-group "testimage" \
-          --name "scaleset1" \
-          --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
-    
-
-
-
+          # Update the VMSS with the new image
+          az vmss update \
+            --resource-group "testimage" \
+            --name "scaleset1" \
+            --set virtualMachineProfile.storageProfile.imageReference.id=$imageId
