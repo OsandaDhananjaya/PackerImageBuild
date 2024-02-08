@@ -38,8 +38,8 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         run: |
-          packer build /home/osanda/actions-runner/_work/PackerImageBuild/PackerImageBuild/Main_packer.json
-
+          packer build /home/azureuser/Packer-in-Azure-main/Main_packer.json
+          
       - name: Update scale set image and instances
         env:
           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
