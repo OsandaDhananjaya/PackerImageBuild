@@ -11,7 +11,7 @@ Before getting started, create a self-hosted runner in your Virtual machine. Thi
 Clone this repository to your local environment using the following command and cd to the repo and trigger the workflow:
 
 bash
-```git clone``` ~ git@github.com:OsandaDhananjaya/PackerImageBuild.git~
+```git clone```  git@github.com:OsandaDhananjaya/PackerImageBuild.git
 
 
 ```cd your-repo```
