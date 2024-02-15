@@ -24,6 +24,20 @@ The bellow diagram illustrates the flow of the image upgrade process.
 
 ![Screenshot from 2024-02-09 14-32-15](https://github.com/OsandaDhananjaya/PackerImageBuild/assets/101936340/7a430efc-e728-4f22-94c1-26309876ecdf)
 
+### Github action workflow
 
+### 1) Pipeline Activation:
+Trigger the continuous integration pipeline to commence the build process.
 
+### 2) Packer Image Building:
+
+Execute the Packer build command to create a customized image, ensuring adherence to security and configuration standards.
+
+### 3) Azure Image Deployment:
+
+Deploy the newly created image to the Azure Images, maintaining versioning and tagging conventions for traceability.
+
+### 4) Scale Set Image Update:
+
+Utilize Azure CLI commands to seamlessly update the image associated with the targeted Azure Virtual Machine Scale Set.
 
