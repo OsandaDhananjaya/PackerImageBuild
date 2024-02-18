@@ -8,13 +8,8 @@ This repository provides step-by-step instructions for upgrading images in Azure
 Before getting started, create a self-hosted runner in your Virtual machine. This runner will be used to execute the workflows in this repository.
 
 ### 2. Clone the Repository
-Clone this repository to your local environment using the following command and cd to the repo and trigger the workflow:
+Clone this repository to your local environment and cd to the repo and trigger the workflow:
 
-bash
-```git clone```  git@github.com:OsandaDhananjaya/PackerImageBuild.git
-
-
-```cd your-repo```
 
 ## Flow Diagram
 
