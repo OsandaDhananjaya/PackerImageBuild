@@ -8,10 +8,13 @@ This repository provides step-by-step instructions for upgrading images in Azure
 Before getting started, create a self-hosted runner in your Virtual machine. This runner will be used to execute the workflows in this repository.
 
 ### Create a folder
-$ mkdir actions-runner && cd actions-runner# Download the latest runner package
-$ curl -o actions-runner-linux-x64-2.314.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.314.1/actions-runner-linux-x64-2.314.1.tar.gz# Optional: Validate the hash
-$ echo "6c726a118bbe02cd32e222f890e1e476567bf299353a96886ba75b423c1137b5  actions-runner-linux-x64-2.314.1.tar.gz" | shasum -a 256 -c# Extract the installer
-$ tar xzf ./actions-runner-linux-x64-2.314.1.tar.gz
+ mkdir actions-runner && cd actions-runner# Download the latest runner package
+ 
+ curl -o actions-runner-linux-x64-2.314.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.314.1/actions-runner-linux-x64-2.314.1.tar.gz# Optional: Validate the hash
+ 
+ echo "6c726a118bbe02cd32e222f890e1e476567bf299353a96886ba75b423c1137b5  actions-runner-linux-x64-2.314.1.tar.gz" | shasum -a 256 -c# Extract the installer
+ 
+ tar xzf ./actions-runner-linux-x64-2.314.1.tar.gz
 
 ### 2. Clone the Repository
 Clone this repository to your local environment and cd to the repo and trigger the workflow:
