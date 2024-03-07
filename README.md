@@ -21,6 +21,9 @@ Before getting started, create a self-hosted runner in your Virtual machine. Thi
 
 ```$ tar xzf ./actions-runner-linux-x64-2.314.1.tar.gz```
 
+### NOTE 
+To configuer it you can go to your repo -> settings -> Actions -> Runners
+
 
 ## Flow Diagram
 
