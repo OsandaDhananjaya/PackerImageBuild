@@ -8,7 +8,7 @@ This repository provides step-by-step instructions for upgrading images in Azure
 Before getting started, create a self-hosted runner in your Virtual machine. This runner will be used to execute the workflows in this repository.
 
 ### Instructions for Downloading and Installing GitHub Actions Runner
-Step 1: Create a Folder
+### Step 1: Create a Folder
 bash
 Copy code
 $ mkdir actions-runner && cd actions-runner
