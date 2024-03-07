@@ -11,7 +11,7 @@ Before getting started, create a self-hosted runner in your Virtual machine. Thi
 ### Step 1: Create a Folder
 bash
 Copy code
-$ mkdir actions-runner && cd actions-runner
+```$ mkdir actions-runner && cd actions-runner```
 Step 2: Download the Latest Runner Package
 bash
 Copy code
