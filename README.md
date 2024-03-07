@@ -12,18 +12,18 @@ Before getting started, create a self-hosted runner in your Virtual machine. Thi
 bash
 Copy code
 ```$ mkdir actions-runner && cd actions-runner```
-Step 2: Download the Latest Runner Package
+### Step 2: Download the Latest Runner Package
 bash
 Copy code
-$ curl -o actions-runner-linux-x64-2.314.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.314.1/actions-runner-linux-x64-2.314.1.tar.gz
-Step 3 (Optional): Validate the Hash
+```$ curl -o actions-runner-linux-x64-2.314.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.314.1/actions-runner-linux-x64-2.314.1.tar.gz```
+### Step 3 (Optional): Validate the Hash
 bash
 Copy code
-$ echo "6c726a118bbe02cd32e222f890e1e476567bf299353a96886ba75b423c1137b5  actions-runner-linux-x64-2.314.1.tar.gz" | shasum -a 256 -c
-Step 4: Extract the Installer
+```$ echo "6c726a118bbe02cd32e222f890e1e476567bf299353a96886ba75b423c1137b5  actions-runner-linux-x64-2.314.1.tar.gz" | shasum -a 256 -c```
+### Step 4: Extract the Installer
 bash
 Copy code
-$ tar xzf ./actions-runner-linux-x64-2.314.1.tar.gz
+```$ tar xzf ./actions-runner-linux-x64-2.314.1.tar.gz```
 
 
 ## Flow Diagram
